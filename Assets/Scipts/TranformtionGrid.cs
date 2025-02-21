@@ -14,13 +14,33 @@ public class TranformtionGrid : MonoBehaviour
         grid = new Transform[gridResolution * gridResolution * gridResolution];
         for(int i = 0, z = 0; z< gridResolution; z++)
         {
-            for(y = 0; y < gridResolution; y++)
+            for(int y = 0; y < gridResolution; y++)
             {
-                for(x = 0; x < gridResolution; x++)
+                for(int x = 0; x < gridResolution; x++)
                 {
-                    grid[i] = CreateGridPoint(x, y, z);
+                    grid[i] = CreatGridPoint(x, y, z);
                 }
             }
         }
+
+        
+    }
+
+    Transform CreatGridPoint(int x, int y, int z)
+    {
+        Transform point = Instantiate<Transform>(prefab);
+        point.localPosition = GetCoordination(x, y, z);
+        point.GetComponent<MeshRenderer>().material.color = new Color
+            (
+                (float) x / gridResolution, (float) y / gridResolution, (float) z / gridResolution
+            );
+        return point;
+    }
+
+    Vector3 GetCoordination(int x, int y, int z)
+    {
+        return new Vector3(x - (gridResolution - 1) * 0.5f, y - (gridResolution - 1) * 0.5f, z - (gridResolution - 1) * 0.5f);
     }
 }
+
+
