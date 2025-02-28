@@ -1,16 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ScaleTransformation : Transformation
 {
-    public Vector3 Scale;
+    public Vector3 scale;
 
-    public override Vector3 Apply(Vector3 point)
+    public override Matrix4x4 Matrix 
     {
-        point.x *= Scale.x;
-        point.y *= Scale.y;
-        point.z *= Scale.z;
-        return point;
+        get 
+        {
+            Matrix4x4 matrix = new Matrix4x4();
+            matrix.SetRow(0, new Vector4(scale.x, 0f, 0f, 0f));
+            matrix.SetRow(1, new Vector4(0f, scale.y, 0f, 0f));
+            matrix.SetRow(2, new Vector4(0f, 0f, scale.z, 0f));
+            matrix.SetRow(3, new Vector4(0f, 0f, 0f, 1f));
+            return matrix;
+        }
     }
+    
 }

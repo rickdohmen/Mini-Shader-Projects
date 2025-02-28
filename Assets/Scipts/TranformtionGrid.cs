@@ -10,24 +10,9 @@ public class TranformtionGrid : MonoBehaviour
     Transform[] grid;
     List<Transformation> transformations;
 
-    private void Awake()
-    {
-        transformations = new List<Transformation>();
+    Matrix4x4 transformation;
 
-        grid = new Transform[gridResolution * gridResolution * gridResolution];
-        for(int i = 0, z = 0; z< gridResolution; z++)
-        {
-            for(int y = 0; y < gridResolution; y++)
-            {
-                for(int x = 0; x < gridResolution; x++)
-                {
-                    grid[i] = CreatGridPoint(x, y, z);
-                }
-            }
-        }
-
-        
-    }
+    
 
     private void Update()
     {
@@ -42,6 +27,25 @@ public class TranformtionGrid : MonoBehaviour
                 }
             }
         }
+
+    }
+
+    private void Awake()
+    {
+        transformations = new List<Transformation>();
+
+        grid = new Transform[gridResolution * gridResolution * gridResolution];
+        for (int i = 0, z = 0; z < gridResolution; z++)
+        {
+            for (int y = 0; y < gridResolution; y++)
+            {
+                for (int x = 0; x < gridResolution; x++)
+                {
+                    grid[i] = CreatGridPoint(x, y, z);
+                }
+            }
+        }
+
 
     }
 
