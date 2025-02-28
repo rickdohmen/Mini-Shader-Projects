@@ -8,9 +8,12 @@ public class TranformtionGrid : MonoBehaviour
     public int gridResolution = 10;
 
     Transform[] grid;
+    List<Transformation> transformations;
 
-    void Awake()
+    private void Awake()
     {
+        transformations = new List<Transformation>();
+
         grid = new Transform[gridResolution * gridResolution * gridResolution];
         for(int i = 0, z = 0; z< gridResolution; z++)
         {
@@ -24,6 +27,32 @@ public class TranformtionGrid : MonoBehaviour
         }
 
         
+    }
+
+    private void Update()
+    {
+        GetComponents<Transformation>(transformations);
+        for (int i = 0, z = 0; z < gridResolution; z++)
+        {
+            for(int y = 0; y <gridResolution; y++)
+            {
+                for(int x = 0;x < gridResolution; x++)
+                {
+                    grid[i].localPosition = TransformPoint(x, y, z);
+                }
+            }
+        }
+
+    }
+
+    Vector3 TransformPoint(int x, int y, int z)
+    {
+        Vector3 coordinates = GetCoordination(x, y, z);
+        for(int i = 0; i < transformations.Count; i++)
+        {
+            coordinates = transformations[i].Apply(coordinates);
+        }
+        return coordinates;
     }
 
     Transform CreatGridPoint(int x, int y, int z)
